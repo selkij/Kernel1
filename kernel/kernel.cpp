@@ -41,7 +41,9 @@ extern "C" void _start(void) {
     }
 
     idt_init();
-    volatile int div = 0/0;
+    volatile int a = 10;
+    volatile int b = 0;
+    volatile int c = a / b;
 
     print("Hello World\n");
     print("This is Kernel1 made in C++!");
