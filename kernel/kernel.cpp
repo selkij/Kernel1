@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <limine.h>
-#include "../cpu/idt.hpp"
+#include "cpu/idt.hpp"
 
 // The Limine requests can be placed anywhere, but it is important that
 // the compiler does not optimise them away, so, usually, they should

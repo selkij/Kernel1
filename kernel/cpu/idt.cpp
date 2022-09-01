@@ -25,14 +25,6 @@ idtr_t idtr
 	.offset = (uint64_t) &ivt[0],
 };
 
-void idt_init() 
-{
-	asm volatile ("sti"); // enable ints
-	idt_set_descriptor(0, divby0_handler); // register div by 0 handler
-	asm volatile ("lidt %0" : : "m"(idtr)); // load idt
-	asm volatile ("sti"); // ints enable
-}
-
 void idt_set_descriptor(uint8_t vector, void* isr)
 {
     idt_entry_t* descriptor = &ivt[vector];
@@ -46,10 +38,27 @@ void idt_set_descriptor(uint8_t vector, void* isr)
     descriptor->reserved      = 0;
 }
 
-__attribute__((interrupt))
-void divby0_handler()
+struct interrupt_frame
+{
+    uint64_t rip;
+    uint64_t cs;
+    uint64_t rflags;
+    uint64_t rsp;
+    uint64_t ss;
+};
+
+__attribute__ ((interrupt))
+void divby0_handler(struct interrupt_frame *frame)
 {
 	print("div by 0 yay");
     while (true)
         asm volatile ("cli; hlt");
 }
+
+void idt_init() 
+{
+	idt_set_descriptor(0, (void*)divby0_handler); // register div by 0 handler
+	asm volatile ("lidt %0" : : "m"(idtr)); // load idt
+	asm volatile ("sti"); // ints enable
+}
+
