@@ -14,7 +14,7 @@ static volatile struct limine_terminal_request terminal_request = {
 
 static void done(void) {
     for (;;) {
-        __asm__("hlt");
+        asm volatile("hlt");
     }
 }
 
@@ -41,9 +41,6 @@ extern "C" void _start(void) {
     }
 
     idt_init();
-    volatile int a = 10;
-    volatile int b = 0;
-    volatile int c = a / b;
 
     print("Hello World\n");
     print("This is Kernel1 made in C++!");
