@@ -1,5 +1,7 @@
 #include <stdint.h>
-#include "kernel.hpp"
+#include <include/cpu/pic.hpp>
+#include <include/lib/panic.hpp>
+#include <include/lib/printf.hpp>
 
 struct idt_entry_t
 {
@@ -50,201 +52,151 @@ struct interrupt_frame
 __attribute__ ((interrupt))
 void divby0_handler(struct interrupt_frame *frame)
 {
-	print("\u001b[31m[CPU Exception]\u001b[0m Divide by zero exception\n");
-    for(;;)
-        asm volatile ("cli; hlt");
+	panic("Divide by zero exception", 0);
 }
 
 __attribute__((interrupt))
 void debug_handler(struct interrupt_frame *frame) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Debug exception\n");
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Debug exception", 0);
 }
 
 __attribute__((interrupt))
 void nmi_handler(struct interrupt_frame *frame) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m NMI exception\n");
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("NMI exception", 0);
 }
 
 __attribute__((interrupt))
 void breakpoint_handler(struct interrupt_frame *frame) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Breakpoint exception\n");
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Breakpoint exception", 0);
 }
 
 __attribute__((interrupt))
 void overflow_handler(struct interrupt_frame *frame) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Overflow exception\n");
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Overflow exception", 0);
 }
 
 __attribute__((interrupt))
 void bound_range_handler(struct interrupt_frame *frame) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Bound range exceeded exception\n");
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Bound range exceeded exception", 0);
 }
 
 
 __attribute__((interrupt))
 void invalid_opcode_handler(struct interrupt_frame *frame) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Invalid OpCode exception\n");
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Invalid OpCode exception", 0);
 }
 
 __attribute__((interrupt))
 void device_unavailable_handler(struct interrupt_frame *frame) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Device Not Available exception\n");
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Device Not Available exception", 0);
 }
 
 __attribute__((interrupt))
 void doublef_handler(struct interrupt_frame *frame, uint64_t error_code) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Double Fault exception: " + error_code + '\n');
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Double Fault exception", error_code);
 }
 
 __attribute__((interrupt))
 void coprocessor_segmentf_handler(struct interrupt_frame *frame) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Co-processor Segment Fault exception\n");
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Co-processor Segment Fault exception", 0);
 }
 
 __attribute__((interrupt))
 void invalid_tss_handler(struct interrupt_frame *frame, uint64_t error_code) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Invalid TSS exception: " + error_code + '\n');
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Invalid TSS exception", error_code);
 }
 
 __attribute__((interrupt))
 void segment_not_present_handler(struct interrupt_frame *frame, uint64_t error_code) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Segment not present exception: " + error_code + '\n');
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Segment not present exception", error_code);
 }
 
 __attribute__((interrupt))
 void stack_segmentf_handler(struct interrupt_frame *frame, uint64_t error_code) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Stack-segment Fault exception: " + error_code + '\n');
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Stack-segment Fault exception", error_code);
 }
 
 __attribute__((interrupt))
 void gpf_handler(struct interrupt_frame *frame, uint64_t error_code) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m General Protection Fault exception: " + error_code + '\n');
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("General Protection Fault exception", error_code);
 }
 
 __attribute__((interrupt))
 void pagef_handler(struct interrupt_frame *frame, uint64_t error_code) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Page Fault exception: " + error_code + '\n');
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Page Fault exception", error_code);
 }
 
 __attribute__((interrupt))
 void x87_fp_handler(struct interrupt_frame *frame) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m x87 Floating Point exception\n");
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("x87 Floating Point exception", 0);
 }
 
 __attribute__((interrupt))
 void alignment_check_handler(struct interrupt_frame *frame, uint64_t error_code) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Alignment Check exception: " + error_code + '\n');
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Alignment Check exception", error_code);
 }
 
 __attribute__((interrupt))
 void machine_check_handler(struct interrupt_frame *frame) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Machine Check exception\n");
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Machine Check exception", 0);
 }
 
 __attribute__((interrupt))
 void simd_fp_handler(struct interrupt_frame *frame) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m SIMD floating-point exception\n");
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("SIMD floating-point exception", 0);
 }
 
 __attribute__((interrupt))
 void virtualization_handler(struct interrupt_frame *frame) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Virtualization Exception\n");
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Virtualization Exception", 0);
 }
 
 __attribute__((interrupt))
 void control_protection_handler(struct interrupt_frame *frame, uint64_t error_code) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Control Protection exception: " + error_code + '\n');
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Control Protection exception", error_code);
 }
 
 __attribute__((interrupt))
 void hyperv_injection_handler(struct interrupt_frame *frame) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Hypervisor Injection Exception\n");
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Hypervisor Injection Exception", 0);
 }
 
 __attribute__((interrupt))
 void vmm_com_handler(struct interrupt_frame *frame, uint64_t error_code) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m VMM Communication exception: " + error_code + '\n');
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("VMM Communication exception", error_code);
 }
 
 __attribute__((interrupt))
 void security_handler(struct interrupt_frame *frame, uint64_t error_code) 
 {
-    print("\u001b[31m[CPU Exception]\u001b[0m Security exception: " + error_code + '\n');
-    for(;;)
-        asm volatile ("cli; hlt");
+    panic("Security exception", error_code);
 }
 
 void idt_init() 
 {
-    print("\u001b[92m[INFO]\u001b[0m Initializing IDT\n");
-
-	idt_set_descriptor(0, (void*)divby0_handler);
+	idt_set_descriptor(0, (void*)divby0_handler); // Register exceptions
     idt_set_descriptor(1, (void*)debug_handler);
     idt_set_descriptor(2, (void*)nmi_handler);
     idt_set_descriptor(3, (void*)breakpoint_handler);
@@ -269,7 +221,26 @@ void idt_init()
     idt_set_descriptor(29, (void*)vmm_com_handler);
     idt_set_descriptor(30, (void*)security_handler);
 
-	asm volatile ("lidt %0" : : "m"(idtr)); // load idt
+    irq_set_mask(0); // Register IRQs
+    irq_set_mask(1); 
+    irq_set_mask(2);
+    irq_set_mask(3);
+    irq_set_mask(4);
+    irq_set_mask(5);
+    irq_set_mask(6);
+    irq_set_mask(7);
+    irq_set_mask(8);
+    irq_set_mask(9);
+    irq_set_mask(10);
+    irq_set_mask(11);
+    irq_set_mask(12);
+    irq_set_mask(13);
+    irq_set_mask(14);
+    irq_set_mask(15);
+
+	asm volatile ("lidt %0" : : "m"(idtr)); // load IDT
 	asm volatile ("sti"); // ints enable
+
+    printf("[\u001b[92mINFO\u001b[0m] Initialized IDT\n");
 }
 

@@ -1,6 +1,7 @@
 # This is the name that our final kernel executable will have.
 # Change as needed.
 override KERNEL := kernel.elf
+CXX := x86_64-elf-gcc
 
 # Convenience macro to reliably declare overridable command variables.
 define DEFAULT_VAR =
