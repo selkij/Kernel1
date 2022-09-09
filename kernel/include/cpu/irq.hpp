@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
-// #include <include/cpu/isr/isr.h>
+#include <include/lib/printf.hpp>
 #include "pic.hpp"
 #include "../drivers/ps2/keyboard.hpp"
 

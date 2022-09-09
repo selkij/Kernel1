@@ -1,11 +1,13 @@
-/*void* irq_handler_table[16] = { };
+#include <include/cpu/irq.hpp>
+
+void* irq_handler_table[16] = { };
 
 void irq_init()
 {
     irq_install_handler(1, &keyboard_handler);
-	irq_install_handler(12, &mouse_handler);
+	// irq_install_handler(12, &mouse_handler);
 	
-    nlog_info("IRQ Initialized\n");
+    printf("[\u001b[92mINFO\u001b[0m] Initialized IRQs\n");
 }
 
 void irq_install_handler(uint8_t num, void (*handler)(struct registers*))
@@ -28,5 +30,5 @@ void irq_handler(struct registers* r)
     }
     
     // Sends an EOI (End of Interrupt) to the PIC
-    pic_send_eoi(r->int_no - 32);
-}*/
+    pic_sendEOI(r->int_no - 32);
+}

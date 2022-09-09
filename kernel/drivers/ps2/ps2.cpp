@@ -50,11 +50,13 @@ void ps2_init()
     {
         printf("[\u001b[92mINFO\u001b[0m] Initialized PS2 controller\n");
         ps2_enable();
+        return;
     } 
 
     if(result == 0xfc)
     {
         printf("\u001b[91m[ERROR]\u001b[0m Failed Initializing PS2 controller, no keyboard will be available\n");
+        return;
     }
 }
 
